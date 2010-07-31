@@ -108,7 +108,7 @@ def updatevalues():
 
 def printdata():
     print program, version
-    print "interface   |   RX bw / pkgs      |      TX bw / pkgs   | " + \
+    print "interface   |   RX bw / pkgs       |      TX bw / pkgs    | " + \
         "total:  RX       TX "
     
     for iface in device.keys():
@@ -121,7 +121,7 @@ def printdata():
              'txp' : pretty_unit(txp, minunit=1, format="%0.0f"),
              'rx_t' : pretty_unit(rx_t),
              'tx_t' : pretty_unit(tx_t) }
-        print ("%(iface)-12s| %(rx)7sB/s %(rxp)6sp/s| %(tx)7sB/s %(txp)6sp/s|"+ \
+        print ("%(iface)-12s| %(rx)7sB/s %(rxp)6sp/s | %(tx)7sB/s %(txp)6sp/s |"+ \
             "   %(rx_t)7sB %(tx_t)7sB") % d
 
 def clear():
