@@ -30,7 +30,7 @@ import sys
 import time
 
 program = 'bittivahti'
-version = '$id$'
+version = '0.9.1'
 
 devfile = '/proc/net/dev'
 sleep_seconds = 1
@@ -74,7 +74,10 @@ def pretty_unit(value, base=1000, minunit=None, format="%0.1f"):
             v = v/base
             u = u * base
         else:
-            return format % v + " " + unit
+            if v >= 10:
+                return "%0.0f %s" % (v, unit)
+            else:
+                return format % v + units[0] + unit
 
 def updatevalues():
     lines = None
