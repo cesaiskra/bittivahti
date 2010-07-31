@@ -46,6 +46,8 @@ Usage: bittivahti [OPTIONS]
 device = {}
 delta = {}
 total = {}
+start = time.time()
+period = None
 
 class InvalidBaseException(Exception):
     pass
@@ -80,10 +82,14 @@ def pretty_unit(value, base=1000, minunit=None, format="%0.1f"):
                 return format % v + units[0] + unit
 
 def updatevalues():
+    global start, period
     lines = None
     # Read network traffic stats to memory quickly
     with open(devfile, 'r') as f:
         lines = f.readlines()[2:]
+        curtime = time.time()
+        period = curtime - start
+        start = curtime
     
     for line in lines:
         data = re.split('[ \t:]+', line.strip())
@@ -112,7 +118,7 @@ def printdata():
         "total:  RX       TX "
     
     for iface in device.keys():
-        rx, tx, rxp, txp = delta[iface]
+        rx, tx, rxp, txp = map(lambda x: x/period, delta[iface])
         rx_t, tx_t, rxp_t, txp_t = total[iface]
         d = {'iface' : iface,
              'rx' : pretty_unit(rx),
@@ -144,6 +150,7 @@ def loop(sleep, dynunit, colours):
             sys.exit()
 
 def main(argv=None):
+  global period
   colours = False
   if argv is None:
     argv = sys.argv
@@ -154,6 +161,7 @@ def main(argv=None):
     print usage
     sys.exit(2)
   interval = sleep_seconds
+  period = float(interval)
   dynunit = False
   for o, a in opts:
     if o in ("-h", "--help"):
