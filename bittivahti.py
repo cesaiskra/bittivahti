@@ -108,7 +108,7 @@ def updatevalues():
 
 def printdata():
     print program, version
-    print "interface   |   RX bw / pkgs       |      TX bw / pkgs    | " + \
+    print "interface   |      RX bw / packets |      TX bw / packets | " + \
         "total:  RX       TX "
     
     for iface in device.keys():
