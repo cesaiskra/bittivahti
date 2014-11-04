@@ -6,7 +6,7 @@ import sys
 import time
 
 program = 'bittivahti'
-version = '0.9.1'
+version = '0.9.2'
 
 devfile = '/proc/net/dev'
 

@@ -10,12 +10,13 @@ with open(README) as f:
 
 
 setup(name='bittivahti',
-      version='0.9.1',
+      version='0.9.2',
       description="Bittivahti bandwidth monitor for Linux",
       long_description=long_description,
       classifiers=[],
       keywords='',
       author='Joonas Kuorilehto',
+      author_email='joneskoo@kapsi.fi',
       url='https://github.com/joneskoo/bittivahti',
       license='MIT',
       packages=find_packages(exclude=['tests']),
