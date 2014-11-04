@@ -4,11 +4,10 @@ from .bittivahti import loop
 
 
 @click.command('bittivahti')
-@click.option('-c', '--colors', help='Show something with colors',
-              is_flag=True)
 @click.option('-i', '--interval', default=3, type=click.FLOAT,
               help='Wait SECONDS between updates', metavar='SECONDS')
-def main(interval, colors):
+def main(interval):
     """Display traffic statistics on local network interfaces"""
     dynunit = False
+    colors = False
     loop(interval, dynunit, colors)
