@@ -5,6 +5,10 @@ import re
 import sys
 import time
 
+# Python 3 int is long
+if sys.version > '3':
+    long = int
+
 program = 'bittivahti'
 version = '0.9.2'
 
@@ -68,8 +72,8 @@ def updatevalues():
             if iface in device:
                 delta[iface] = [b-a for a, b in zip(device[iface], trafficdata)]
             else:
-                delta[iface] = [0L, 0L, 0L, 0L]
-                total[iface] = [0L, 0L, 0L, 0L]
+                delta[iface] = [long(0)]*4
+                total[iface] = [long(0)]*4
             device[iface] = trafficdata
 
             # Calculate total amount of traffic
@@ -80,9 +84,9 @@ def updatevalues():
 
 
 def printdata():
-    print program, version
-    print "interface   |      RX bw / packets |      TX bw / packets | " + \
-        "total:  RX       TX "
+    print(program, version)
+    print("interface   |      RX bw / packets |      TX bw / packets | "
+          "total:  RX       TX ")
 
     for iface in device.keys():
         rx, tx, rxp, txp = map(lambda x: x/period, delta[iface])
@@ -105,8 +109,9 @@ def clear():
 
 
 def loop(sleep, dynunit, colours):
-    print 'Please wait. The display is updated every %.0f seconds.' % sleep
-    print 'Starting up...'
+    print('Please wait. The display is updated every {sleep:.0f} seconds.'
+          .format(sleep=sleep))
+    print('Starting up...')
     updatevalues()
     time.sleep(sleep)
     # Main loop
@@ -117,5 +122,5 @@ def loop(sleep, dynunit, colours):
             printdata()
             time.sleep(sleep)
         except KeyboardInterrupt:
-            print '\n\nBye!'
+            print('\n\nBye!')
             sys.exit()
