@@ -12,4 +12,3 @@ def main(interval, colors):
     """Display traffic statistics on local network interfaces"""
     dynunit = False
     loop(interval, dynunit, colors)
-
