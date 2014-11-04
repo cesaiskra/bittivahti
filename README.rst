@@ -8,7 +8,7 @@ Installation
 
 .. code-block:: console
 
-  $ pip install --pre bittivahti
+  $ pip install bittivahti
 
 .. code-block:: console
 
