@@ -1,6 +1,6 @@
 import click
 
-from .bittivahti import loop
+from .bittivahti import Bittivahti
 
 
 @click.command('bittivahti')
@@ -10,4 +10,5 @@ def main(interval):
     """Display traffic statistics on local network interfaces"""
     dynunit = False
     colors = False
-    loop(interval, dynunit, colors)
+    bitti = Bittivahti()
+    bitti.loop(interval, dynunit, colors)
