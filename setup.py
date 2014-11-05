@@ -10,7 +10,7 @@ with open(README) as f:
 
 
 setup(name='bittivahti',
-      version='0.9.2',
+      version='0.9.3',
       description="Bittivahti bandwidth monitor for Linux",
       long_description=long_description,
       classifiers=[
