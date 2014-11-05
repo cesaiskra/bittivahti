@@ -23,7 +23,7 @@ class Bittivahti:
     start = time.time()
     period = None
 
-    def updatevalues(self):
+    def update_state(self):
         lines = None
         # Read network traffic stats to memory quickly
         with open(DEVFILE, 'r') as f:
@@ -54,11 +54,16 @@ class Bittivahti:
                     self.total[iface] = [a+b for a, b in zip(self.total[iface], self.delta[iface])]
 
     def printdata(self):
+        '''Print current state'''
         print("{program} {version}".format(program=PROGRAM, version=VERSION))
         print("interface   |      RX bw / packets |      TX bw / packets | "
               "total:  RX       TX ")
+        print("\n".join(self.format_data()))
 
-        for iface in self.device.keys():
+    def format_data(self):
+        '''Format traffic statistics to a display array of lines'''
+        display = []
+        for iface in sorted(self.device.keys()):
             rx, tx, rxp, txp = [x/self.period for x in self.delta[iface]]
             rx_t, tx_t, rxp_t, txp_t = self.total[iface]
             d = {'iface': iface,
@@ -69,21 +74,23 @@ class Bittivahti:
                  'rx_t': pretty_unit(rx_t),
                  'tx_t': pretty_unit(tx_t)
                  }
-            print(("%(iface)-12s| %(rx)7sB/s %(rxp)6sp/s |"
+            display.append((
+                   "%(iface)-12s| %(rx)7sB/s %(rxp)6sp/s |"
                    " %(tx)7sB/s %(txp)6sp/s |"
                    "   %(rx_t)7sB %(tx_t)7sB") % d)
+        return display
 
     def loop(self, sleep, dynunit, colours):
         print('Please wait. The display is updated every {sleep:.0f} seconds.'
               .format(sleep=sleep))
         print('Starting up...')
-        self.updatevalues()
+        self.update_state()
         time.sleep(sleep)
         # Main loop
         while True:
             try:
                 clear()
-                self.updatevalues()
+                self.update_state()
                 self.printdata()
                 time.sleep(sleep)
             except KeyboardInterrupt:
