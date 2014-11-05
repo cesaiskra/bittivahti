@@ -54,9 +54,9 @@ class Bittivahti:
                     self.total[iface] = [a+b for a, b in zip(self.total[iface], self.delta[iface])]
 
     def printdata(self):
-        print(PROGRAM, VERSION)
+        print("{program} {version}".format(program=PROGRAM, version=VERSION))
         print("interface   |      RX bw / packets |      TX bw / packets | "
-              "self.total:  RX       TX ")
+              "total:  RX       TX ")
 
         for iface in self.device.keys():
             rx, tx, rxp, txp = [x/self.period for x in self.delta[iface]]
