@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+  <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+  <title>Bittimopo</title>
+  <style type="text/css" media="screen">
+  div.container {
+    width: 50em;
+    height: 35em;
+    background-color: #ddd;
+    position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
+    text-align: center;
+  }
+  div.moped {
+    height: 90%;
+  }
+  div.label {
+    margin: auto;
+  }
+  .moped img {
+    transform: rotate(5deg);
+  }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <div class="moped">
+    <img src="moped.svg" alt="Moped">
+  </div>
+
+  <div class="label">
+    <p>Bandwidth usage: <strong id="bw">LOADING...</strong></p>
+  </div>
+</div>
+
+<script charset="utf-8">
+var jsonStream = new EventSource('/data.stream')
+jsonStream.addEventListener('message', function (e) {
+  var message = JSON.parse(e.data);
+  var bw = document.getElementById("bw");
+  var traffic = message.tx + message.rx;
+  var ratio = traffic / message.max;
+  var angle = 45 * ratio;
+  bw.innerHTML = Math.round(traffic*8/1024)
+                 + " kbit/s (" + Math.round(100*ratio) + "%)";
+  var img = document.getElementsByTagName("img")[0];
+  img.style.transform="rotate(" + angle + "deg)";
+});
+</script>
+
+</body>

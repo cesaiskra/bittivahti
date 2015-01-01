@@ -45,5 +45,6 @@ setup(name='bittivahti',
       entry_points="""
       [console_scripts]
       bittivahti=bittivahti.cli:main
+      bittimopo=bittivahti.web:main
       """
       )
